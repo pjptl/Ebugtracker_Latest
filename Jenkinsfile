@@ -25,7 +25,7 @@ agent any
                                      }
 			stage('Deploy'){
                                 steps{
-                                   bat 'java -jar C:\ProgramData\Jenkins\.jenkins\workspace\NewEbug\target\ebugtracker-casestudy-0.0.1-SNAPSHOT.jar'
+                                   bat 'java -jar C:/ProgramData/Jenkins/.jenkins/workspace/NewEbug/target\ebugtracker-casestudy-0.0.1-SNAPSHOT.jar'
 				  				    
                         }
                         }

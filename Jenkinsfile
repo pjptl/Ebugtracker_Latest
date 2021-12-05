@@ -10,7 +10,7 @@ agent any
 			}
             			stage('Checkout'){
             			steps{
-            			    git branch: 'main', url: 'https://github.com/pjptl/Ebugtracker_Latest.git'
+            			    git branch: 'master', url: 'https://github.com/pjptl/Ebugtracker_Latest.git'
             			}
 		                }
 			stage('Build'){

@@ -1,36 +1,47 @@
 pipeline{
-agent any
+	agent {
+		dockerfile true
+	}
+	environment {
+        registry = "ghorpap/ebugtracker"
+        registryCredential = 'ghorpap'
+        dockerImage = ''
+        }  
 
 		stages {
-			stage('Verify Branch'){
-			steps{
-			echo "@GIT_BRANCH"
+			stage('Cloning our Git') {
+               			 steps {
+                    			git branch:'master', url:'https://github.com/pjptl/Ebugtracker_Latest.git'
+                     		        }   
+		                                  }
 			
-			}
-			}
-            			stage('Checkout'){
-            			steps{
-            			    git branch: 'master', url: 'https://github.com/pjptl/Ebugtracker_Latest.git'
-            			}
-		                }
-			stage('Build'){
-            			steps{
-            			    bat 'mvn compile'
-            			}
-		                }
-			stage('Package'){
-				steps{
-				   bat 'mvn package'
-				      }
-                                     }
-			stage('Deploy'){
-                                steps{
-                                   bat 'java -jar C:/ProgramData/Jenkins/.jenkins/workspace/Ebug/target/ebugtracker-casestudy-0.0.1-SNAPSHOT.jar'
-				  				    
-                        }
-                        }
-			
-		                 
-		                
-	                }
+            			stage('Building our image') {
+                 					steps {
+                     						script {
+                         						dockerImage = docker.build registry + ":$BUILD_NUMBER"
+
+                 						        }
+                     						}
+
+            							}
+			         stage('Deploy our image') {
+                                                         steps {
+                                                                script {
+                        						docker.withRegistry( '', registryCredential ) {
+                            						dockerImage.push()
+
+                        						}
+
+                    							}
+
+               							 }
+
+            						    }
+				stage('Cleaning up') {
+               						steps {
+                  						 bat "docker rmi $registry:$BUILD_NUMBER"
+
+               							}
+							}
+		}
 }

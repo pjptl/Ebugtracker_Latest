@@ -23,7 +23,7 @@ bat 'mvn package'
 stage('Create Image')
 {
 steps{
-bat 'docker build -t image1:v1 .'
+bat 'docker build -t image1 .'
 }
 }
 stage('Create Container')

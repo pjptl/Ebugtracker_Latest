@@ -29,7 +29,7 @@ bat 'docker build -t image1 .'
 stage('Create Container')
 {
 steps{
-bat 'docker container create -p 8081:8081 --name container1 image1:v1'
+bat 'docker container create -p 8081:8081 --name container1 image1'
 }
 }
 stage('Start Container')

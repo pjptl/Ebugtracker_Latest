@@ -23,13 +23,13 @@ bat 'mvn package'
 stage('Create Image')
 {
 steps{
-bat 'docker build -t image1 .'
+bat 'docker build -t image1:v1 .'
 }
 }
 stage('Create Container')
 {
 steps{
-bat 'docker container create -p 8081:9090 --name container1 image1'
+bat 'docker container create -p 8081:9090 --name container1 image1:v1'
 }
 }
 stage('Start Container')
